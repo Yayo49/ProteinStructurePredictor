@@ -1,12 +1,18 @@
 const neuralNetworkLibrary = require("./neuralNetworkLibrary");
 const fs = require("fs");
+const readline = require('readline');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
 const MAX_AMINO_ACID_COUNT = 100;
 const MAX_SECONDARY_STRUCTURE_COUNT = 100;
 const POSSIBLE_AMINO_ACIDS = "ACDEFGHIKLMNPQRSTVWY*".split("");
 const POSSIBLE_SECONDARY_STRUCTURES = "CHE".split("");
 const INPUT_SIZE = POSSIBLE_AMINO_ACIDS.length * MAX_AMINO_ACID_COUNT;
 const OUTPUT_SIZE = POSSIBLE_SECONDARY_STRUCTURES.length * MAX_SECONDARY_STRUCTURE_COUNT;
-let datasetCSV = fs.readFileSync("2018-06-06-ss.cleaned.csv");
+let datasetCSV = fs.readFileSync("dataset.csv");
 
 let lines = [];
 let bufferIndex = 0;
@@ -131,3 +137,15 @@ for (let i = 0; i < lines.length; i++) {
 	myNeuralNetwork.gradientDescent(0.01);
     }
 }
+
+function askQuestion() {
+    rl.question("Please type an amino acid sequence: ", function(aminoAcidSequence) {
+	let inputVector = aminoAcidSequenceToVector(aminoAcidSequence);
+	let outputVector = myNeuralNetwork.forwardPropagate(inputVector);
+	let secondaryStructureSequence = vectorToSecondaryStructureSequence(outputVector);
+	console.log(secondaryStructureSequence);
+	askQuestion();
+    });
+}
+
+askQuestion();
