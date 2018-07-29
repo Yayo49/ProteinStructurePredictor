@@ -6,7 +6,7 @@ const POSSIBLE_AMINO_ACIDS = "ACDEFGHIKLMNPQRSTVWY*".split("");
 const POSSIBLE_SECONDARY_STRUCTURES = "CHE".split("");
 const INPUT_SIZE = POSSIBLE_AMINO_ACIDS.length * MAX_AMINO_ACID_COUNT;
 const OUTPUT_SIZE = POSSIBLE_SECONDARY_STRUCTURES.length * MAX_SECONDARY_STRUCTURE_COUNT;
-let datasetCSV = fs.readFileSync("dataset.csv");
+let datasetCSV = fs.readFileSync("2018-06-06-ss.cleaned.csv");
 
 let lines = [];
 let bufferIndex = 0;
